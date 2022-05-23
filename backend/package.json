@@ -1,0 +1,29 @@
+{
+	"name": "blog",
+	"version": "1.0.0",
+	"description": "A simple blog",
+	"main": "index.js",
+	"scripts": {
+		"server": "node server",
+		"devServer": "nodemon server",
+		"client": "npm run dev --prefix frontend",
+		"dev": "concurrently \"npm run server\" \"npm run client\""
+	},
+	"author": "Prince",
+	"license": "ISC",
+	"devDependencies": {
+		"nodemon": "^2.0.16"
+	},
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"concurrently": "^7.0.0",
+		"cookie-parser": "^1.4.6",
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.0",
+		"express": "^4.17.2",
+		"express-async-handler": "^1.2.0",
+		"joi": "^17.6.0",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^6.2.0"
+	}
+}

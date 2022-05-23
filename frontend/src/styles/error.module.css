@@ -1,0 +1,23 @@
+
+.err_root {
+	max-width: 400px;
+	margin: auto;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.err__emoticon {
+	align-self: center;
+	font-size: 5.5rem;
+	margin: 0 0.5rem;
+	color: #BBB;
+}
+
+.err__message {
+	margin: 0.5rem 0;
+	font-size: 1.5rem;
+	color: var(--text_low_emphasis);
+}
+

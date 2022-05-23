@@ -1,0 +1,225 @@
+
+.cinput {
+	display: inline-block;
+	margin: 1rem 1rem 1.4rem;
+	transition: all 0.2s ease-in-out;
+	width: 230px;
+}
+
+.cinput__input_wrapper {
+	display: flex;
+	align-items: center;
+	flex-direction: row-reverse;
+
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.cinput__leading_icon {
+	color: var(--text_nom_emphasis);
+	margin-left: 1rem;
+}
+
+.cinput__floating_label {
+	pointer-events: none;
+	user-select: none;
+
+	position: absolute;
+	top: 50%;
+	left: 2.5rem;
+	z-index: 10;
+	
+	transform-origin: 0% 50%;
+	transform: translateY(-50%) scale(1);
+	
+	padding: 0.2rem 0.4rem;
+	font-size: 1rem;
+	
+	border-radius: 8px;
+	color: var(--text_nom_emphasis);
+	background-color: var(--intermediate_shade);
+
+	transition: all 0.2s ease;
+}
+
+.cinput--not_empty .cinput__floating_label {
+	top: 0%;
+	left: 1rem !important;
+	transform: translateY(-50%) scale(0.8);
+}
+
+.cinput__input {
+	width: 100%;
+	height: 100%;
+	
+	font-size: 1rem;
+	padding: 1rem;
+	
+	outline: none;
+	border: none;
+	background: none;
+	border-radius: 1rem;
+
+	color: var(--text_nom_emphasis);
+	font-size: 1rem;
+	transition: all 0.2s ease;
+}
+
+
+
+.cinput__textarea {
+	min-height: 200px;
+	padding: 0;
+
+	position: relative;
+	right: 0.5rem;
+
+	padding: 1rem 1rem 1rem 1.5rem;
+	resize: none;
+	overflow: auto;
+}
+
+.cinput__textarea::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+	cursor: default;
+}
+
+.cinput__textarea::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
+	cursor: default;
+}
+
+
+.cinput__input:focus,
+.cinput__input:focus ~ .cinput__leading_icon {
+	color: var(--primary_color);
+}
+
+.cinput__input:focus ~ .cinput__floating_label {
+	top: 0%;
+	left: 1rem !important;
+	transform: translateY(-50%) scale(0.8);
+
+	color: var(--on_primary);
+	background-color: var(--primary_color);
+}
+
+.cinput__input:focus ~ .cinput__outline {
+	border: 2px solid var(--primary_color);
+}
+
+
+.cinput__input:disabled,
+.cinput__input:disabled ~ .cinput__floating_label,
+.cinput__input:disabled ~ .cinput__leading_icon {
+	color: var(--text_lowest_emphasis);
+}
+
+.cinput__input:disabled ~ .cinput__outline {
+	border-color: var(--text_lowest_emphasis);
+}
+
+
+.cinput__outline {
+	position: absolute;
+
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+
+	border: 1px solid var(--text_nom_emphasis);
+	border-radius: 1rem;
+	
+	transition: all 0.2s ease;
+	pointer-events: none;
+}
+
+
+
+.cinput__extra_text {
+	margin: 0 1rem;
+	width: 12rem;
+	max-width: 12rem;
+
+	position: absolute;
+
+	color: #808080;
+	font-size: 0.8rem;
+	opacity: 0;
+
+	transition: all 0.2s ease;
+	transform: translateY(-1rem) scale(0);
+
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	line-clamp: 1;
+	overflow: hidden;
+
+	z-index: 100;
+	transition: all 0.2s ease-in-out;
+
+	cursor: default;
+}
+
+.cinput__extra_text:hover {
+	display: inline-block;
+	overflow: visible;
+	background-color: var(--intermediate_shade);
+}
+
+.cinput--erroneous {
+	animation: ErrorWiggle 0.1s ease-in-out;
+}
+
+.cinput--erroneous .cinput__leading_icon {
+	color: var(--error_color) !important;
+}
+
+.cinput--erroneous .cinput__input {
+	color: var(--error_color) !important;
+}
+
+.cinput--erroneous .cinput__outline {
+	border: 2px solid var(--error_color) !important;
+}
+
+.cinput--erroneous .cinput__floating_label {
+	color: var(--error_color) !important;
+}
+
+.cinput--erroneous.cinput--focused .cinput__floating_label {
+	color: var(--on_error) !important;
+	background-color: var(--error_color) !important;
+}
+
+.cinput--erroneous .cinput__extra_text {
+	color: var(--error_color) !important;
+	font-size: 0.9rem;
+	font-weight: 500;
+
+	opacity: 1;
+	transform: translateY(0) scale(1);
+}
+
+
+@keyframes ErrorWiggle {
+	0% {
+		transform: translateX(0) scale(1.05);
+	}
+	25% {
+		transform: translateX(+20px) scale(1.05);
+	}
+	50% {
+		transform: translateX(0%) scale(1.05);
+	}
+	75% {
+		transform: translateX(-20px) scale(1.05);
+	}
+	100% {
+		transform: translateX(0) scale(1.05);
+	}
+}

@@ -1,0 +1,128 @@
+
+.register_container {
+	display: grid;
+	place-items: center;
+}
+
+.register {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	padding: 2rem;
+	position: relative;
+}
+
+.backarrow {
+	outline: none;
+	position: absolute;
+	align-self: flex-start;
+
+	width:  2.25rem;
+	height: 2.25rem;
+	padding: 0.5rem;
+
+	margin-left: 0.4rem;
+
+	border-radius: 50%;
+	border: 2px solid rgba(0, 0, 0, 0);
+	background-color: unset;
+
+	cursor: default;
+	transition: all 0.3s ease;
+}
+
+.backarrow:focus {
+	border: 2px solid var(--text_nom_emphasis);
+}
+
+.backarrow:hover {
+	box-shadow:
+		+12px +12px 24px var(--dark_shade),
+		-12px -12px 24px var(--light_shade)
+	;
+}
+
+.backarrow:active {
+	box-shadow: none;
+}
+
+.backarrow svg {
+	width: 100%;
+	height: auto;
+}
+
+
+.register__header {
+	margin: 0 0 1.2rem 0;
+	color: var(--text_nom_emphasis);
+}
+
+
+.register__anim_window_wrapper {
+	display: flex;
+}
+
+.register__anim_window_wrapper > * {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	display: none;
+	opacity: 0;
+	transition: all 0.2s ease;
+}
+
+.register__anim_window--displayed {
+	display: flex;
+	opacity: 1;
+}
+
+.register__continue_btn {
+	align-self: flex-end;
+}
+
+
+/* :global is not css but a way of making it global when using webpack*/
+@keyframes :global(FadeInFromLeft) {
+	0% {
+		opacity: 0;
+		transform: translateX(-50%);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0%);
+	}
+}
+
+@keyframes :global(FadeInFromRight) {
+	0% {
+		opacity: 0;
+		transform: translateX(+50%);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0%);
+	}
+}
+
+@keyframes :global(FadeOutToLeft) {
+	0% {
+		opacity: 1;
+		transform: translateX(0%);
+	}
+	100% {
+		opacity: 0;
+		transform: translateX(-50%);
+	}
+}
+
+@keyframes :global(FadeOutToRight) {
+	0% {
+		opacity: 1;
+		transform: translateX(0%);
+	}
+	100% {
+		opacity: 0;
+		transform: translateX(+50%);
+	}
+}

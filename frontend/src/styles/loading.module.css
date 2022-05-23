@@ -1,0 +1,41 @@
+
+.loading_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	width: 100vw;
+	padding: 3rem 0;
+}
+
+.loading_svg_wrapper {
+	max-width: 120px;
+}
+
+.loading_svg {
+	width: 100%;
+	height: auto;
+}
+
+.loading_svg > path {
+	stroke-dasharray: 712;
+	stroke-dashoffset: 712;
+	animation: StrokeAnim 2s linear infinite forwards;
+	transition: all 0.2s ease;
+}
+
+.loading_message {
+	color: var(--text_nom_emphasis);
+}
+
+@keyframes StrokeAnim {
+	0% {
+		stroke-dasharray: 361;
+		stroke-dashoffset: 712;
+	}
+	80%, 100% {
+		stroke-dasharray: 712;
+		stroke-dashoffset: 0;
+	}
+}

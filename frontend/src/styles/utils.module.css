@@ -1,0 +1,102 @@
+
+.clink {
+	position: relative;
+	outline: none;
+	font-family: 'Open Sans';
+	transition: all 0.2s ease;
+}
+
+.clink::selection {
+	color: #fff;
+	background-color: var(--link_color);
+}
+
+.clink,
+.clink:link,
+.clink:visited,
+.clink:hover,
+.clink:focus,
+.clink:active {
+	text-decoration: none;
+}
+
+.clink::after {
+	content: '';
+	height: 2px;
+	width: 0px;
+
+	position: absolute;
+	bottom: -2px;
+
+	border-radius: 0.5px;
+	transform: all ease 0.2s;
+	background-color: var(--link_color);
+}
+
+.clink:hover::after {
+	left: 50%;
+	transform: translateX(-50%);
+	animation: Grow 0.2s ease-in 1 forwards;
+}
+
+.clink:focus::after {
+	left: 0%;
+	transform: translateX(0%);
+	animation: Grow 0.2s ease-in 1 forwards;
+}
+
+@keyframes Grow {
+	0% {
+		width: 0%;
+	}
+	100% {
+		width: 100%;
+	}
+}
+
+
+.cbtn,
+.cbtn--raised {
+	outline: none;
+	margin: 1rem;
+	padding: 0.6rem 1rem;
+	
+	border-radius: 16px;
+	border: 2px solid rgba(0, 0, 0, 0.05);
+	background-color: unset;
+	transition: all 0.3s ease;
+}
+
+.cbtn--raised {
+	border-color: transparent;
+	box-shadow:
+		+12px +12px 24px var(--dark_shade),
+		-12px -12px 24px var(--light_shade);
+}
+
+.cbtn:hover {
+	border-color: transparent;
+	box-shadow:
+		+12px +12px 24px var(--dark_shade),
+		-12px -12px 24px var(--light_shade);
+}
+
+.cbtn:focus {
+	border-color: var(--text_nom_emphasis);
+}
+
+.cbtn:enabled:active {
+	box-shadow: none;
+}
+
+/* For touch devices */
+@media (hover:none), (pointer:coarse) {
+	.cbtn {
+		border-color: transparent;
+		box-shadow:
+			+12px +12px 32px var(--dark_shade),
+			-12px -12px 32px var(--light_shade)
+		;
+	}
+}
+

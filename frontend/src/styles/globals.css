@@ -1,0 +1,69 @@
+
+*, *::before, *::after {
+	font-family: 'Open Sans', -apple-system, 'Roboto', sans-serif;
+}
+
+*::selection {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+body {
+	background-color: var(--intermediate_shade);
+	scroll-behavior: smooth;
+}
+
+body::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
+}
+
+/*@font-face {
+	font-family: 'Open Sans';
+	src: local(sans-serif), url("../../public/assets/fonts/OpenSans-Regular.ttf");
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Lobster Two';
+	src: local(sans-serif), url("../../public/assets/fonts/LobsterTwo-Bold.ttf");
+	font-display: swap;
+} */
+
+
+:root {
+	--light_shade: hsl(0, 0%, 100%);
+	--intermediate_shade: hsl(0, 0%, 90%);
+	--dark_shade: hsl(0, 0%, 75%);
+	
+	/* --primary_color: #121212; */
+	--primary_color: #007676;
+	--on_primary: #FFFFFF;
+
+	--error_color: #B00000;
+	--on_error: #FFFFFF;
+
+	--text_color: #121212;
+
+	--text_highest_emphasis: hsl(0, 0%, 0%);
+	--text_high_emphasis: hsl(0, 0%, 12%);
+	--text_nom_emphasis: hsl(0, 0%, 40%);
+	--text_low_emphasis: hsl(0, 0%, 52%);
+	--text_lowest_emphasis: hsl(0, 0%, 62%);
+	--text_disabled: hsl(0, 0%, 62%);
+
+	--link_color: #5290d6;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:focus,
+a:active {
+	color: var(--link_color);
+}
+

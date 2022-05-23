@@ -1,0 +1,39 @@
+
+.post {
+	max-width: 750px;
+	/* background-color: rgba(0, 0, 0, 0.1); */
+}
+
+.header {
+	display: flex;
+	align-items: center;
+}
+
+.author {
+	font-size: 0.9rem;
+	color: var(--text_high_emphasis);
+}
+
+.timestamp {
+	font-size: 0.8rem;
+	color: var(--text_low_emphasis);
+}
+
+.authorImage {
+	user-select: none;
+	max-width: 32px;
+	max-height: 32px;
+	opacity: 0.28;
+	margin-right: 8px;
+}
+
+.author_timestamp_wrapper p {
+	margin: 0;
+}
+
+.post__title {
+	font-weight: 400;
+	font-size: 2rem;
+	margin: 1rem 0;
+	font-family: 'Times New Roman', Times, serif;
+}

@@ -1,0 +1,34 @@
+
+.pnf_root {
+	max-width: 400px;
+	margin: auto;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.pnf__emoticon {
+	user-select: none;
+	align-self: center;
+
+	font-size: 5.5rem;
+	margin: 0 0.5rem;
+
+	color: #BBB;
+}
+
+.pnf__header {
+	margin: 0.5rem 0;
+	font-size: 4rem;
+	color: var(--text_low_emphasis);
+}
+
+.pnf__content {
+	margin: 0;
+}
+
+.pnf__header::selection,
+.pnf__content::selection {
+	color: unset;
+	background-color: rgba(0, 0, 0, 0.05);
+}

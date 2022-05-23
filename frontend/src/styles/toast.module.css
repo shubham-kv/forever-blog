@@ -1,0 +1,96 @@
+
+.toast {
+	--toast_color_foreground: #121212;
+	--toast_color_background: var(--intermediate_shade, #E0E0E0);
+
+	display: flex;
+	max-width: 400px;
+	margin: 1rem;
+	padding: 0.6rem;
+	
+	position: relative;
+	z-index: 1000;
+	overflow: hidden;
+	user-select: none;
+	
+	border-radius: 1rem;
+	color: var(--toast_color_foreground);
+	background-color: var(--toast_color_background);
+	
+	box-shadow:
+		+12px +12px 24px var(--dark_shade),
+		-12px -12px 24px var(--light_shade);
+	
+	animation: ToastFadeIn 0.3s ease-in-out 1 forwards;
+	transition: all 0.3s ease;
+}
+
+.toast--ok {
+	--toast_color_foreground: #1E8E3E;
+	--toast_color_background: #C9E3C9;
+}
+
+.toast--error {
+	--toast_color_foreground: #B00000;
+	--toast_color_background: #E3C9C9;
+}
+
+
+.toast__content {
+	pointer-events: none;
+	margin: 0.5rem;
+}
+
+
+.toast__regress_bar {
+	display: inline-block;
+	width: 100%;
+	height: 4px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background-color: var(--toast_color_foreground, #404040);
+	animation: ToastBarRegress linear 1 normal forwards;
+}
+
+
+
+@keyframes ToastFadeIn {
+	0% {
+		opacity: 0;
+		box-shadow: none;
+		transform: translateY(200%);
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		transform: translateY(0%);
+		box-shadow:
+			+12px +12px 24px var(--dark_shade),
+			-12px -12px 24px var(--light_shade);
+	}
+}
+
+@keyframes :global(ToastFadeOut) {
+	0% {
+		opacity: 1;
+		box-shadow:
+			+12px +12px 24px var(--dark_shade),
+			-12px -12px 24px var(--light_shade);
+	}
+	50% {
+		opacity: 1;
+		box-shadow: none;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes ToastBarRegress {
+	to {
+		width: 0%;
+	}
+}
+

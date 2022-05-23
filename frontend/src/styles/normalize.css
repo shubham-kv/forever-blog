@@ -1,0 +1,38 @@
+
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+ul, ol {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	outline: none;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:focus,
+a:active {
+	color: #5290d6;
+}
+
+a:hover,
+a:focus {
+	text-decoration: underline;
+}
