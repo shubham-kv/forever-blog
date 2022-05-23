@@ -45,7 +45,7 @@ app.use('/api/feed', require('./routes/api/feed'))
 app.use('/api/posts', require('./routes/api/posts'))
 
 app.get('/', (req, res) => {
-	res.send('Server is running')
+	res.send('Server is up and running')
 })
 
 // necessary to be below those route middlware
