@@ -4,9 +4,10 @@ import {useNavigate} from 'react-router-dom'
 
 import {setToken}		from 'slices/tokenSlice'
 import ToastContainer	from 'components/ToastContainer'
+import DialogContainer	from 'components/DialogContainer'
 
 import {getAccessToken} from 'fetches/auth'
-import {REFRESH_INTERVAL, ToastDuration} from 'constants'
+import {REFRESH_INTERVAL} from 'constants'
 
 
 const AppContext = createContext()
@@ -15,7 +16,9 @@ const AppContextProvider = ({ children }) => {
 	const dispatch = useDispatch()
 
 	const toastContainerRef = useRef(null)
+	const dialogContainerRef = useRef(null)
 	const navigate = useNavigate()
+
 	let timeoutId = -1
 
 	const refreshAccessToken = async () => {
@@ -33,7 +36,7 @@ const AppContextProvider = ({ children }) => {
 			}
 		}
 		else {
-			toastContainerRef.current.toastifyError('Failed to fetch!', ToastDuration.LONG)
+			toastContainerRef.current.toastifyError('Failed to fetch!')
 		}
 	}
 
@@ -42,8 +45,9 @@ const AppContextProvider = ({ children }) => {
 	}
 
 	return (
-		<AppContext.Provider value={[toastContainerRef, refreshAccessToken, stopRefreshingToken]}>
+		<AppContext.Provider value={[refreshAccessToken, stopRefreshingToken, toastContainerRef, dialogContainerRef]}>
 			<ToastContainer ref={toastContainerRef} />
+			<DialogContainer ref={dialogContainerRef} />
 			{ children }
 		</AppContext.Provider>
 	)

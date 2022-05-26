@@ -12,7 +12,6 @@ import Post			from 'components/Post'
 import {getFeed} from 'fetches/feed'
 import styles from 'styles/feed.module.css'
 
-import {ToastDuration} from 'constants'
 
 
 
@@ -39,28 +38,19 @@ function FeedList({feed}) {
 
 export default function Feed() {
 	const accessToken = useSelector(selectToken)
-
-	const [toastContainerRef] = useContext(AppContext)
+	const [,,toastContainerRef] = useContext(AppContext)
 	const [feed, setFeed] = useState(null)
 
 	const fetchFeed = async () => {
 		const data = await getFeed(accessToken)
 
 		if(!data.hadFetchError) {
-			if(data.ok) {
-				setFeed(data.resData.posts)
-			}
-			else {
-				console.log(data.resData)
-				toastContainerRef.current.toastifyError(data.resData.message, ToastDuration.LONG)
-			}
-
-			// (data.ok)
-			// 	? setFeed(data.resData.posts)
-			// 	: toastContainerRef.current.toastifyError(data.resData.message, ToastDuration.LONG)
+			(data.ok)
+				? setFeed(data.resData.posts)
+				: toastContainerRef.current.toastifyError(data.resData.message)
 		}
 		else {
-			toastContainerRef.current.toastifyError('Failed to fetch!', ToastDuration.LONG)
+			toastContainerRef.current.toastifyError('Failed to fetch!')
 		}
 	}
 
@@ -79,7 +69,6 @@ export default function Feed() {
 	return (
 		<Routes>
 			<Route path='/' element={<FeedList feed={feed} />} />
-			{/* <Route path='/' element={<Post />} /> */}
 			<Route path=':postId' element={<Post />} />
 		</Routes>
 	)

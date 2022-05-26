@@ -15,9 +15,9 @@ class CustomInput extends React.Component {
 			extraText: ''
 		}
 
-		this.onFocusHandler = this.onFocusHandler.bind(this)
-		this.onBlurHandler = this.onBlurHandler.bind(this)
-		this.onInputHandler = this.onInputHandler.bind(this)
+		this.handleFocus = this.handleFocus.bind(this)
+		this.handleBlur = this.handleBlur.bind(this)
+		this.handleInput = this.handleInput.bind(this)
 		this.validate = this.validate.bind(this)
 
 		this.getValue = this.getValue.bind(this)
@@ -33,17 +33,19 @@ class CustomInput extends React.Component {
 		}
 	}
 
-	onFocusHandler() {
+	handleFocus() {
 		this.customInputRef.current.classList.add(styles.cinputFocused)
 	}
 	
-	onBlurHandler() {
+	handleBlur() {
 		this.inputRef.current.value = this.inputRef.current.value.trim()
 		this.customInputRef.current.classList.remove(styles.cinputFocused)
+
+		this.props.onBlurCallback && this.props.onBlurCallback()
 	}
 
 	// onChange is mapped to oninput, big react mistake, so no use
-	onInputHandler(e) {
+	handleInput(e) {
 		this.setState((prevState) => ({
 			...prevState,
 			value: e.target.value
@@ -57,6 +59,8 @@ class CustomInput extends React.Component {
 			this.customInputRef.current.classList.remove(styles.cinputErroneous)
 			this.customInputRef.current.classList.remove(styles.cinputNotEmpty)
 		}
+
+		this.props.onInputCallback && this.props.onInputCallback(e)
 	}
 
 	validate(focus) {
@@ -92,8 +96,9 @@ class CustomInput extends React.Component {
 	}
 
 	setCustomError(errText) {
-		this.setErrorState()
+		this.customInputRef.current.classList.add(styles.cinputErroneous)
 		this.setState({extraText: errText})
+		this.inputRef.current.focus()
 	}
 
 	clearExtraText() {
@@ -101,12 +106,10 @@ class CustomInput extends React.Component {
 	}
 
 	getValue() {
-		// return this.inputRef.current.value
 		return this.state.value
 	}
 
 	setValue(value) {
-		// this.inputRef.current.value = value
 		this.setState((prevState) => ({
 			...prevState,
 			value: value
@@ -117,9 +120,8 @@ class CustomInput extends React.Component {
 		const {className, inputType, inputName, inputLabel, pattern, multiline, minLength, maxLength, leadingIcon} = this.props
 
 		return (
-			<div ref={this.customInputRef} className={`${styles.cinput} ${className}`}>
+			<div ref={this.customInputRef} className={`${styles.cinput} ${className ? className : ''}`}>
 				<div className={styles.cinputInputWrapper}>
-
 					{
 						(multiline)
 							? <textarea
@@ -130,8 +132,8 @@ class CustomInput extends React.Component {
 								name={inputName}
 								value={this.state.value}
 								required
-								onFocus={this.onFocusHandler} onBlur={this.onBlurHandler}
-								onInput={this.onInputHandler}
+								onFocus={this.handleFocus} onBlur={this.handleBlur}
+								onInput={this.handleInput}
 								minLength={minLength} maxLength={maxLength}
 								/>
 
@@ -144,8 +146,8 @@ class CustomInput extends React.Component {
 								required
 								value={this.state.value}
 								pattern={pattern}
-								onFocus={this.onFocusHandler} onBlur={this.onBlurHandler}
-								onInput={this.onInputHandler}
+								onFocus={this.handleFocus} onBlur={this.handleBlur}
+								onInput={this.handleInput}
 								minLength={minLength} maxLength={maxLength}
 								/>
 					}
@@ -174,16 +176,22 @@ class CustomInput extends React.Component {
 }
 
 CustomInput.propTypes = {
+	className: PropTypes.string,
 	inputType: PropTypes.string.isRequired,
 	inputName: PropTypes.string.isRequired,
 	inputLabel: PropTypes.string.isRequired,
+
 	value: PropTypes.string,
 	pattern: PropTypes.string,
 	patternMismatchErrText: PropTypes.string,
 	multiline: PropTypes.bool,
+
 	minLength: PropTypes.number,
 	maxLength: PropTypes.number,
-	leadingIcon: PropTypes.object
+	leadingIcon: PropTypes.object,
+
+	onInputCallback: PropTypes.func,
+	onBlurCallback: PropTypes.func,
 }
 
 export default CustomInput

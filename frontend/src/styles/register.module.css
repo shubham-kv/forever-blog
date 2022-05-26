@@ -14,20 +14,16 @@
 }
 
 .backarrow {
-	outline: none;
 	position: absolute;
+	outline: none;
 	align-self: flex-start;
-
 	width:  2.25rem;
 	height: 2.25rem;
 	padding: 0.5rem;
-
 	margin-left: 0.4rem;
-
 	border-radius: 50%;
 	border: 2px solid rgba(0, 0, 0, 0);
 	background-color: unset;
-
 	cursor: default;
 	transition: all 0.3s ease;
 }
@@ -52,12 +48,15 @@
 	height: auto;
 }
 
-
 .register__header {
 	margin: 0 0 1.2rem 0;
 	color: var(--text_nom_emphasis);
 }
 
+.register_form {
+	display: flex;
+	flex-direction: column;
+}
 
 .register__anim_window_wrapper {
 	display: flex;
@@ -79,6 +78,7 @@
 
 .register__continue_btn {
 	align-self: flex-end;
+	margin: 1rem 0;
 }
 
 

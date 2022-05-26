@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {Link, Navigate, Routes, Route, useNavigate} from 'react-router-dom'
+import {Link, Routes, Route} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 
 import {selectToken} from 'slices/tokenSlice'
@@ -7,25 +7,21 @@ import {AppContext} from 'contexts/AppContext'
 
 import Loading 		from 'components/Loading'
 import Error		from 'components/Error'
-import PageNotFound from 'components/PageNotFound'
 import PostPreview 	from 'components/PostPreview'
 import Post 		from 'components/Post'
-import PostForm 	from './postForm'
+import NewPostForm 	from './new'
 
 import styles from 'styles/posts.module.css'
 
-import {getAllPosts, createPost, putPost, deletePost} from 'fetches/posts'
-import {ToastDuration, Status} from 'constants'
+import {getAllPosts} from 'fetches/posts'
+import {FetchState} from 'constants'
 
 
 
 
 const NewPostLink = () => (
 	<Link className={styles.plusSvgWrapper} to='/posts/new'>
-		<svg viewBox='0 0 512 512' fill='currentColor'>
-			<path d='M417.4,224H288V94.6c0-16.9-14.3-30.6-32-30.6c-17.7,0-32,13.7-32,30.6V224H94.6C77.7,224,64,238.3,64,256  c0,17.7,13.7,32,30.6,32H224v129.4c0,16.9,14.3,30.6,32,30.6c17.7,0,32-13.7,32-30.6V288h129.4c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z'
-				stroke='currentColor'/>
-		</svg>
+		<svg viewBox='0 0 512 512' fill='currentColor'><path d='M417.4,224H288V94.6c0-16.9-14.3-30.6-32-30.6c-17.7,0-32,13.7-32,30.6V224H94.6C77.7,224,64,238.3,64,256  c0,17.7,13.7,32,30.6,32H224v129.4c0,16.9,14.3,30.6,32,30.6c17.7,0,32-13.7,32-30.6V288h129.4c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z' stroke='currentColor'/></svg>
 	</Link>
 )
 
@@ -54,31 +50,35 @@ const NoPosts = () => {
 	)
 }
 
-export default function Posts() {
+const PostList = () => {
 	const accessToken = useSelector(selectToken)
+	const [,,toastContainerRef] = useContext(AppContext)
 
-	const [toastContainerRef] = useContext(AppContext)
 	const [posts, setPosts] = useState(null)
-
-	const [curStatus, setCurStatus] = useState(Status.LOADING)
+	const [fetchState, setFetchState] = useState(FetchState.LOADING)
+	const [errorMsg, setErrMsg] = useState('')
 
 	const fetchPosts = async () => {
-		setCurStatus(Status.LOADING)
+		setFetchState(FetchState.LOADING)
 		const data = await getAllPosts(accessToken)
 
 		if(!data.hadFetchError) {
-			if(data.ok) {
-				setCurStatus(Status.SUCCESS)
-				setPosts(data.resData.posts)
+			const {ok, resData} = data
+
+			if(ok) {
+				setFetchState(FetchState.SUCCESS)
+				setPosts(resData.posts)
 			}
 			else {
-				setCurStatus(Status.ERROR)
-				toastContainerRef.current.toastifyError(data.resData.message, ToastDuration.LONG)
+				setFetchState(FetchState.ERROR)
+				setErrMsg(resData.message)
+				toastContainerRef.current.toastifyError(resData.message)
 			}
 		}
 		else {
-			setCurStatus(Status.ERROR)
-			toastContainerRef.current.toastifyError('Failed to Fetch!', ToastDuration.LONG)
+			setFetchState(FetchState.ERROR)
+			setErrMsg('Failed to fetch')
+			toastContainerRef.current.toastifyError('Failed to Fetch!')
 		}
 	}
 
@@ -86,43 +86,44 @@ export default function Posts() {
 		fetchPosts()
 	}, [])
 
-	if(curStatus === Status.LOADING) {
-		return <Loading message='Fetching posts...' />
+	if(fetchState === FetchState.LOADING) {
+		return <Loading message='Loading your posts...' />
 	}
-	if((curStatus === Status.ERROR) || !posts) {
-		return <Error message='Got some server error!!' retryCallback={fetchPosts} />
+	if((fetchState === FetchState.ERROR)) {
+		return <Error message={errorMsg} retryCallback={fetchPosts} />
 	}
-
-	const removePost = async (postId) => {
-		await deletePost(postId, accessToken)
-		setPosts(posts.filter(post => post.id !== postId))
+	if(!posts) {
+		return <Error message={'Got some server error!!'} retryCallback={fetchPosts} />
 	}
 
 	return (
+		(posts.length > 0)
+			? <div className={styles.postList}>
+				<NewPostLink />
+				{
+					posts.map((post, i) => (
+						<PostPreview
+							key={i}
+							linkTo={`/posts/${post.id}`}
+							author={post.author}
+							timestamp={new Date(post.timestamp).toLocaleString('en-GB', {hour12: true})}
+							title={post.title}
+							content={post.body}
+							/>
+					))
+				}
+			</div>
+			: <NoPosts />
+	)
+}
+
+
+export default function Posts() {
+	return (
 		<Routes>
-			<Route path='/' element={
-				(posts.length !== 0) ?
-					<div className={styles.postList}>
-						<NewPostLink />
-						{
-							posts.map((post, i) => (
-								<PostPreview
-									key={i}
-									id={post.id}
-									isEditable={true}
-									linkTo={`/posts/${post.id}`}
-									removeSelf={removePost}
-									author={post.author}
-									timestamp={new Date(post.timestamp).toLocaleString('en-GB', {hour12: true})}
-									title={post.title} content={post.body}
-									/>
-							))
-						}
-					</div>
-					: <NoPosts />
-				} />
-			<Route path='new' element={<PostForm header='Create a new post' postSubmitter={createPost} />} />
-			<Route path=':postId' element={<Post />} />
+			<Route path='/' element={<PostList />}/>
+			<Route path='new' element={<NewPostForm />} />
+			<Route path=':postId' element={<Post isEditable={true} />} />
 		</Routes>
 	)
 }

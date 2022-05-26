@@ -1,0 +1,39 @@
+
+.dialog_container {
+	width: 100vw;
+	height: 100vh;
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	background: rgba(0, 0, 0, 0.075);
+
+	animation: BlurIn 0.1s ease-in forwards;
+}
+
+.dialog_container > * {
+	position: fixed;
+	left: 50%;
+	top: 40%;
+	transform: translate(-50%, -50%);
+	box-shadow: 0 0 44px 32px rgba(0, 0, 0, 0.12);
+}
+
+@keyframes BlurIn {
+	0% {
+		backdrop-filter: blur(0px);
+	}
+	100% {
+		backdrop-filter: blur(24px);
+	}	
+}
+
+@keyframes :global(DialogFadeOut) {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}

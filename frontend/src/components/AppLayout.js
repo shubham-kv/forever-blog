@@ -13,7 +13,7 @@ import styles from 'styles/layout.module.css'
 
 export default function AppLayout() {
 	const accessToken = useSelector(selectToken)
-	const [, refreshAccessToken] = useContext(AppContext)
+	const [refreshAccessToken] = useContext(AppContext)
 
 	useEffect(() => {
 		if(!accessToken)

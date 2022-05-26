@@ -1,7 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from 'react'
-import PropTypes from 'prop-types'
 import {useSelector} from 'react-redux'
-import {useParams} from 'react-router-dom'
 
 import {selectToken} from 'slices/tokenSlice'
 import {AppContext} from 'contexts/AppContext'
@@ -11,7 +9,7 @@ import CustomInput from 'components/CustomInput'
 import styles		from 'styles/posts.module.css'
 import utilStyles	from 'styles/utils.module.css'
 
-import {ToastDuration} from 'constants'
+import {createPost} from 'fetches/posts'
 
 
 const InputNames = Object.freeze({
@@ -30,36 +28,12 @@ const enableFields = () => {
 }
 
 
-
-export default function PostForm({header, postSubmitter}) {
+export default function NewPostForm() {
 	const accessToken = useSelector(selectToken)
-	const params = useParams()
-	const postId = params.postId
 
 	const titleInputRef = useRef(null)
 	const bodyInputRef = useRef(null)
-	const [toastContainerRef] = useContext(AppContext)
-
-	const [post, setPost] = useState(null)
-	
-	const fetchPost = async () => {
-		const data = await getPost(postId, accessToken)
-
-		if(!data.hadFetchError) {
-			(data.ok)
-				? setPost(data.resData.post)
-				: toastContainerRef.current.toastifyError(data.resData.message, ToastDuration.LONG)
-		}
-		else {
-			toastContainerRef.current.toastifyError('Failed to fetch!', ToastDuration.LONG)
-		}
-	}
-
-	useEffect(() => {
-		if(postId)
-			fetchPost()
-	}, [])
-
+	const [,,toastContainerRef] = useContext(AppContext)
 
 	const validateData = () => {
 		if(!titleInputRef.current.validate(true)) {
@@ -84,30 +58,27 @@ export default function PostForm({header, postSubmitter}) {
 			body: bodyInputRef.current.getValue()
 		}
 
-		const data = await postSubmitter(postData, accessToken)
+		const data = await createPost(postData, accessToken)
 		enableFields()
 
 		if(!data.hadFetchError) {
 			const {resData} = data
 
 			if(data.ok) {
-				toastContainerRef.current.toastifySuccess(resData.message, ToastDuration.SHORT)
+				toastContainerRef.current.toastifySuccess(resData.message)
 				titleInputRef.current.setValue('')
 				bodyInputRef.current.setValue('')
 			}
 			else {
 				const {key, message} = resData
 
-				titleInputRef.current.clearExtraText()
-				bodyInputRef.current.clearExtraText()
-
 				if(InputNames.TITLE === key) {
-					titleInputRef.current.setErrorState()
+					titleInputRef.current.setCustomError(resData.message)
 				} else if(InputNames.BODY === key) {
-					bodyInputRef.current.setErrorState()
+					bodyInputRef.current.setCustomError(resData.message)
 				}
 
-				toastContainerRef.current.toastifyError(message, ToastDuration.LONG)
+				toastContainerRef.current.toastifyError(message)
 			}
 		}
 	}
@@ -115,7 +86,7 @@ export default function PostForm({header, postSubmitter}) {
 	return (
 		<form className={styles.postForm} noValidate onSubmit={handleSubmit}>
 			<h3 className={styles.pfHeader}>
-				{header}
+				Create a new post
 			</h3>
 
 			<CustomInput
@@ -124,7 +95,6 @@ export default function PostForm({header, postSubmitter}) {
 				inputName={InputNames.TITLE}
 				inputType='text'
 				className={styles.pfCinput}
-				value={(post && post.title) ? post.title : ''}
 			/>
 
 			<CustomInput
@@ -134,16 +104,10 @@ export default function PostForm({header, postSubmitter}) {
 				inputType='text'
 				className={`${styles.pfCinput} ${styles.pfCinputBody}`}
 				multiline
-				value={(post && post.body) ? post.body : ''}
 			/>
 
 			<input className={utilStyles.cbtn} type='submit' value='Submit' />
 		</form>
 	)
-}
-
-PostForm.propTypes = {
-	header: PropTypes.string.isRequired,
-	postSubmitter: PropTypes.func.isRequired,
 }
 

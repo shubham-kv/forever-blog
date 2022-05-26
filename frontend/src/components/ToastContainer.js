@@ -2,7 +2,7 @@ import React from 'react'
 import Toast from 'components/Toast'
 import styles from 'styles/toastContainer.module.css'
 
-import {ToastType} from 'constants'
+import {ToastType, ToastLength} from 'constants'
 
 
 class ToastContainer extends React.Component {
@@ -34,11 +34,15 @@ class ToastContainer extends React.Component {
 	}
 
 	toastifySuccess(message, toastDuration) {
-		this.showToast(message, ToastType.OK, toastDuration)
+		this.showToast(message, ToastType.OK, (toastDuration) ? toastDuration : ToastLength.SHORT)
 	}
-
+	
 	toastifyError(error, toastDuration) {
-		this.showToast(error, ToastType.ERROR, toastDuration)
+		this.showToast(error, ToastType.ERROR, (toastDuration) ? toastDuration : ToastLength.LONG)
+	}
+	
+	toastify(message, toastDuration) {
+		this.showToast(message, ToastType.DEFAULT, (toastDuration) ? toastDuration : ToastLength.SHORT)
 	}
 
 	render() {

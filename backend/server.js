@@ -8,14 +8,17 @@ dotenv.config()
 
 const {errorHandler} = require('./middlewares/error')
 
-mongoose.connect(process.env.REMOTE_MONGO_URI, {
+// mongoose.connect(process.env.REMOTE_MONGO_URI, {
+mongoose.connect(process.env.LOCAL_MONGO_URI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 })
 
 const con = mongoose.connection
 
-con.on('error', console.error.bind(console, '\nGot some problem!\n'))
+con.on('error', () => {
+	throw new Error('Failed to connect to MongoDB')
+})
 con.once('open', () => {
 	console.log('MongoDB connected!')
 })

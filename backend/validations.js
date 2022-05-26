@@ -95,12 +95,11 @@ const validatePostData = (data) => {
 				'string.min':	`Title should be atleast 2 characters long.`
 			}),
 
-		body: Joi.string().required().trim().min(30)
+		body: Joi.string().required().trim()
 			.messages({
-				'any.required':	`Post's Body is required!`,
-				'string.base':	`Post's Body should be of type 'text'.`,
-				'string.empty':	`Post's Body is required!`,
-				'string.min':	`Post's Body should be atleast 30 characters long.`
+				'any.required':	`Post Content is required!`,
+				'string.base':	`Post Content should be of type 'text'.`,
+				'string.empty':	`Post Content is required!`,
 			})
 	})
 	return schema.validate(data)

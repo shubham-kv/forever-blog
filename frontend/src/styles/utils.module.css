@@ -58,9 +58,7 @@
 .cbtn,
 .cbtn--raised {
 	outline: none;
-	margin: 1rem;
 	padding: 0.6rem 1rem;
-	
 	border-radius: 16px;
 	border: 2px solid rgba(0, 0, 0, 0.05);
 	background-color: unset;
@@ -88,6 +86,58 @@
 .cbtn:enabled:active {
 	box-shadow: none;
 }
+
+
+
+
+
+
+
+.cbtn--primary {
+	text-transform: uppercase;
+	outline: none;
+	padding: 0.6rem 1rem;
+	border-radius: 16px;
+	border: 2px solid rgba(0, 0, 0, 0.05);
+	background-color: unset;
+	transition: all 0.3s ease;
+}
+
+.cbtn--primary {
+	border-color: transparent;
+	box-shadow:
+		+12px +12px 24px var(--dark_shade),
+		-12px -12px 24px var(--light_shade);
+}
+
+.cbtn--primary:hover {
+	border-color: transparent;
+	box-shadow:
+		+12px +12px 24px var(--dark_shade),
+		-12px -12px 24px var(--light_shade);
+}
+
+.cbtn--primary:focus {
+	border-color: var(--text_nom_emphasis);
+}
+
+.cbtn--primary:enabled:active {
+	box-shadow: none;
+}
+
+.cbtn--red {
+	color: var(--on_error);
+	background-color: var(--error_color);
+}
+
+.cbtn--red:focus {
+	border: 2px solid var(--text_highest_emphasis);
+}
+
+
+
+
+
 
 /* For touch devices */
 @media (hover:none), (pointer:coarse) {

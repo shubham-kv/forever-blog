@@ -61,7 +61,7 @@ export default function Toast({ id, type, text, duration, deleteCallback }) {
 
 Toast.propTypes = {
 	id: PropTypes.number.isRequired,
-	type: PropTypes.number.isRequired,
+	type: PropTypes.number,
 	text: PropTypes.string.isRequired,
 	duration: PropTypes.number.isRequired,
 	deleteCallback: PropTypes.func.isRequired

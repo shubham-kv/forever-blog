@@ -8,7 +8,6 @@ import {AppContext} from 'contexts/AppContext'
 import Loading from 'components/Loading'
 
 import {logout} from 'fetches/auth'
-import {ToastDuration} from 'constants'
 
 
 
@@ -16,7 +15,7 @@ export default function Logout() {
 	const accessToken = useSelector(selectToken)
 	const dispatch = useDispatch()
 
-	const [toastContainerRef, , stopRefreshingToken] = useContext(AppContext)
+	const [, stopRefreshingToken, toastContainerRef] = useContext(AppContext)
 	const navigate = useNavigate()
 	
 	const handleLogout = async () => {
@@ -26,13 +25,13 @@ export default function Logout() {
 			const {ok, resData} = fetchResult
 
 			if(ok) {
-				toastContainerRef.current.toastifySuccess(resData.message, ToastDuration.SHORT)
+				toastContainerRef.current.toastifySuccess(resData.message)
 			} else {
-				toastContainerRef.current.toastifyError(resData.message, ToastDuration.LONG)
+				toastContainerRef.current.toastifyError(resData.message)
 			}
 		}
 		else {
-			toastContainerRef.current.toastifyError('Failed to fetch!', ToastDuration.LONG)
+			toastContainerRef.current.toastifyError('Failed to fetch!')
 		}
 
 		dispatch(setToken(''))

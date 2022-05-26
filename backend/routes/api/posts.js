@@ -5,6 +5,7 @@ const {
     getPosts,
     getPost,
     createPost,
+	updatePost,
     deletePost,
 } = require("../../controllers/postsController")
 
@@ -20,6 +21,7 @@ router.route('/')
 
 router.route('/:id')
 	.get(authenticate, getPost)
+	.put(authenticate, updatePost)
 	.delete(authenticate, deletePost)
 
 module.exports = router;

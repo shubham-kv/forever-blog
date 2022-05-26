@@ -57,7 +57,7 @@ export const getPost = async (postId, accessToken) => {
 	}
 }
 
-export const putPost = async (postData, accessToken) => {
+export const updatePost = async (postId, postData, accessToken) => {
 	try {
 		const res = await fetch(
 			`${BACKEND_HOST}/api/posts/${postId}`, {
