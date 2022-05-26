@@ -8,8 +8,12 @@ dotenv.config()
 
 const {errorHandler} = require('./middlewares/error')
 
-// mongoose.connect(process.env.REMOTE_MONGO_URI, {
-mongoose.connect(process.env.LOCAL_MONGO_URI, {
+const mongoUri = 
+	(process.env.NODE_ENV === 'development')
+		? process.env.LOCAL_MONGO_URI
+		: process.env.REMOTE_MONGO_URI
+
+mongoose.connect(mongoUri, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 })
