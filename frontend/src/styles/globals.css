@@ -22,19 +22,6 @@ body::-webkit-scrollbar-thumb {
 	border-radius: 4px;
 }
 
-/*@font-face {
-	font-family: 'Open Sans';
-	src: local(sans-serif), url("../../public/assets/fonts/OpenSans-Regular.ttf");
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Lobster Two';
-	src: local(sans-serif), url("../../public/assets/fonts/LobsterTwo-Bold.ttf");
-	font-display: swap;
-} */
-
-
 :root {
 	--light_shade: hsl(0, 0%, 100%);
 	--intermediate_shade: hsl(0, 0%, 90%);
@@ -61,9 +48,12 @@ body::-webkit-scrollbar-thumb {
 
 a:link,
 a:visited,
-a:hover,
 a:focus,
 a:active {
+	color: var(--text_low_emphasis);
+}
+
+a:hover {
 	color: var(--link_color);
 }
 

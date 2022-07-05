@@ -93,7 +93,7 @@ const PostList = () => {
 		return <Error message={errorMsg} retryCallback={fetchPosts} />
 	}
 	if(!posts) {
-		return <Error message={'Got some server error!!'} retryCallback={fetchPosts} />
+		return <Error message='Got some server error!!' retryCallback={fetchPosts} />
 	}
 
 	return (

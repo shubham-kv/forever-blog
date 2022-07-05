@@ -87,7 +87,6 @@ export const deletePost = async (postId, accessToken) => {
 			}
 		)
 		const resData = await res.json()
-		console.log(resData)
 		return {ok: res.ok, resData}
 	}
 	catch(e) {

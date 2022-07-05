@@ -20,12 +20,12 @@ const login = async (req, res, next) => {
 				message: error.details[0].message
 			})
 		}
-	
+
 		const keys = Object.keys(req.body)
-		
+
 		// check if user exists
 		const user = await User.findOne({ username: req.body.username })
-	
+
 		if(!user) {
 			return res.status(400).json({
 				key: keys[0],
@@ -33,22 +33,6 @@ const login = async (req, res, next) => {
 			})
 		}
 
-		// console.log('login')
-		// console.log(`user._id: ${user._id}`)
-		// console.log(`user.id: ${user.id}`)
-		// console.log(`user.name.first: ${user.name.first}`)
-		// console.log(`user.name.last: ${user.name.last}`)
-		// console.log(`user.gender: ${user.gender}`)
-		// console.log(`user.dateOfBirth: ${user.dateOfBirth}`)
-		// console.log(`user.username: ${user.username}`)
-		// console.log(`user.passHash: ${user.password}`)
-
-		// const userDetails = {
-		// 	id: user.id,
-		// 	fullName: `${user.name.first} ${user.name.last}`,
-		// 	username: user.username
-		// }
-	
 		// validate the correctness of password
 		const compareRes = await bcrypt.compare(req.body.password, user.password)
 	

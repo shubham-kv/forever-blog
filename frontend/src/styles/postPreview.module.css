@@ -6,7 +6,7 @@
 	margin: 1rem;
 	padding: 24px;
 	border-radius: 1rem;
-	border: 2px solid rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(0, 0, 0, 0.1);
 	background-color: var(--intermediate_shade);
 
 	transition: all 0.3s ease-out;
@@ -17,7 +17,7 @@
 		+16px +16px 32px var(--dark_shade),
 		-16px -16px 32px var(--light_shade);
 
-	border: 2px solid rgba(0, 0, 0, 0);
+	border-color: rgba(0, 0, 0, 0);
 }
 
 .post_header {

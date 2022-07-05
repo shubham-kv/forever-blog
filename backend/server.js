@@ -34,7 +34,7 @@ const PORT = process.env.PORT || 3000
 app.use(cors({
 	origin: (process.env.NODE_ENV === 'development')
 				? 'http://localhost:8080'
-				: 'https://princev-simple-blog.netlify.app',
+				: 'https://forever-blog.netlify.app/',
 	credentials: true
 }))
 
@@ -60,4 +60,4 @@ app.use(errorHandler)
 
 http.createServer(app).listen(PORT, () => {
 	console.log(`Server running at http://localhost:${PORT}/ ...`)
-});
+})
